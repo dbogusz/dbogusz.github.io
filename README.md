@@ -1,7 +1,1 @@
-echo "# dbogusz.github.io" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/dbogusz/dbogusz.github.io.git
-git push -u origin main
+I'm a data-savvy physics PhD graduate with a keen eye for problem-solving. Eager to transition from academia to industry, bringing my analytical skills and attention to detail to new challenges.
