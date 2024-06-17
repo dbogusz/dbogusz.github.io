@@ -41,11 +41,11 @@ with st.empty():
 # Load selected model
 if selection == 'Logistic Regression':
     st.markdown('You selected Logistic Regression Model')
-    model = joblib.load("logreg_model.sav")
+    model = joblib.open("logreg_model.sav")
                              
 if selection == 'Support Vector Classification':
     st.markdown('You selected SVC Model')
-    model = joblib.load("svc_model.sav")
+    model = joblib.open("svc_model.sav")
 
 # Button to check transaction
 with st.empty():
