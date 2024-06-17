@@ -1,5 +1,5 @@
 import streamlit as st
-import joblib
+import joblib 
 import numpy as np 
 
 # Title and sidebar with colorful background
@@ -41,11 +41,11 @@ with st.empty():
 # Load selected model
 if selection == 'Logistic Regression':
     st.markdown('You selected Logistic Regression Model')
-    model = joblib.open("logreg_model.sav")
+    model = joblib.load("logreg_model.sav")
                              
 if selection == 'Support Vector Classification':
     st.markdown('You selected SVC Model')
-    model = joblib.open("svc_model.sav")
+    model = joblib.load("svc_model.sav")
 
 # Button to check transaction
 with st.empty():
