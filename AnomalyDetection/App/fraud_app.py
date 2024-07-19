@@ -1,6 +1,7 @@
 import streamlit as st
-import joblib 
-import numpy as np 
+import joblib
+import numpy as np
+import os
 
 # Title and sidebar with colorful background
 st.markdown(
@@ -38,20 +39,39 @@ st.subheader('Select Model to Use:')
 with st.empty():
     selection = st.radio("", ["Logistic Regression", "Support Vector Classification"])
 
+# Verify model paths
+logreg_model_path = "AnomalyDetection/App/logreg_model.sav"
+svc_model_path = "AnomalyDetection/App/svc_model.sav"
+
 # Load selected model
-if selection == 'Logistic Regression':
-    st.markdown('You selected Logistic Regression Model')
-    model = joblib.load("AnomalyDetection/App/logreg_model.sav")
-                             
-if selection == 'Support Vector Classification':
-    st.markdown('You selected SVC Model')
-    model = joblib.load("AnomalyDetection/App/svc_model.sav")
+model = None
+try:
+    if selection == 'Logistic Regression':
+        st.markdown('You selected Logistic Regression Model')
+        if os.path.exists(logreg_model_path):
+            model = joblib.load(logreg_model_path)
+        else:
+            st.error(f"Model file not found: {logreg_model_path}")
+    
+    if selection == 'Support Vector Classification':
+        st.markdown('You selected SVC Model')
+        if os.path.exists(svc_model_path):
+            model = joblib.load(svc_model_path)
+        else:
+            st.error(f"Model file not found: {svc_model_path}")
+except ModuleNotFoundError as e:
+    st.error(f"Module not found error: {e}")
+except Exception as e:
+    st.error(f"An error occurred: {e}")
 
 # Button to check transaction
 with st.empty():
     if st.button("Check Transaction", key="check_transaction", help="Click to check the transaction"):
-        result = model.predict(np.array([[v14, v10, v12, v4, v11, v17, v16, v7, v3, v2, v21, v18]]))
-        if result[0] == 0:
-            st.success("Transaction is safe")
-        else: 
-            st.error("Transaction is fraudulent!")
+        if model:
+            result = model.predict(np.array([[v14, v10, v12, v4, v11, v17, v16, v7, v3, v2, v21, v18]]))
+            if result[0] == 0:
+                st.success("Transaction is safe")
+            else: 
+                st.error("Transaction is fraudulent!")
+        else:
+            st.error("Model not loaded. Please check the model file and try again.")
