@@ -39,9 +39,10 @@ st.subheader('Select Model to Use:')
 with st.empty():
     selection = st.radio("", ["Logistic Regression", "Support Vector Classification"])
 
-# Verify model paths
-logreg_model_path = "AnomalyDetection/App/logreg_model.sav"
-svc_model_path = "AnomalyDetection/App/svc_model.sav"
+# Determine the absolute path to the models
+current_dir = os.path.dirname(os.path.abspath(__file__))
+logreg_model_path = os.path.join(current_dir, "logreg_model.sav")
+svc_model_path = os.path.join(current_dir, "svc_model.sav")
 
 # Load selected model
 model = None
